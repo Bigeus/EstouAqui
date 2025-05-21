@@ -88,6 +88,8 @@
 //}
 package com.example.estouaqui;
 
+import static android.app.AlarmManager.INTERVAL_HOUR;
+
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -114,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final int NOTIFICATION_PERMISSION_CODE = 1001;
     private static final int ALARM_REQUEST_CODE = 1002;
-    private static final long INTERVAL_MINUTE = 60 * 1000; // 1 minuto em milissegundos
+    private static final long INTERVAL_MINUTE = 60 * 60 * 1000; // 1 hora em milisegundos
 
     private DatabaseHelper dbHelper;
 
@@ -150,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         TextView mainText = findViewById(R.id.main_text);
         mainText.setText("Bem-vindo ao Mensagem de Vida!\n\n" +
                 "Este aplicativo foi criado para lembrar que você é importante e valioso. " +
-                "A cada minuto, você receberá uma mensagem positiva para te inspirar e fortalecer.\n\n" +
+                "A cada hora, você receberá uma mensagem positiva para te inspirar e fortalecer.\n\n" +
                 "Lembre-se: Você não está sozinho nesta jornada.");
     }
 
@@ -206,11 +208,15 @@ public class MainActivity extends AppCompatActivity {
                 this, ALARM_REQUEST_CODE, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-        // Configurar para disparar no próximo minuto exato
+        // Configurar para disparar na próxima hora cheia
         Calendar calendar = Calendar.getInstance();
+        // Adicionar 1 hora e ajustar para o início da hora (minutos e segundos em 0)
+        calendar.add(Calendar.HOUR_OF_DAY, 1);
+        calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        calendar.add(Calendar.MINUTE, 1);
+
+        long triggerTime = calendar.getTimeInMillis();
 
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
@@ -223,14 +229,17 @@ public class MainActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 alarmManager.setExactAndAllowWhileIdle(
                         AlarmManager.RTC_WAKEUP,
-                        calendar.getTimeInMillis(),
-                        pendingIntent);
+                        triggerTime,
+                        pendingIntent
+                );
+                Log.d(TAG, "Alarme agendado para: " + calendar.getTime().toString());
             } else {
                 alarmManager.setRepeating(
                         AlarmManager.RTC_WAKEUP,
-                        calendar.getTimeInMillis(),
-                        INTERVAL_MINUTE,
-                        pendingIntent);
+                        triggerTime,
+                        AlarmManager.INTERVAL_HOUR,
+                        pendingIntent
+                );
             }
             Log.d(TAG, "Alarme configurado com sucesso");
         } catch (SecurityException e) {

@@ -153,21 +153,25 @@ public class NotificationReceiver extends BroadcastReceiver {
                 context, ALARM_REQUEST_CODE, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-        Calendar nextMinute = Calendar.getInstance();
-        nextMinute.set(Calendar.SECOND, 0);
-        nextMinute.set(Calendar.MILLISECOND, 0);
-        nextMinute.add(Calendar.MINUTE, 1);
+        Calendar nextHour = Calendar.getInstance();
+        nextHour.add(Calendar.HOUR_OF_DAY, 1);
+        nextHour.set(Calendar.MINUTE, 0);
+        nextHour.set(Calendar.SECOND, 0);
+        nextHour.set(Calendar.MILLISECOND, 0);
+
+        long triggerTime = nextHour.getTimeInMillis();
 
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 alarmManager.setExactAndAllowWhileIdle(
                         AlarmManager.RTC_WAKEUP,
-                        nextMinute.getTimeInMillis(),
+                        triggerTime,
                         pendingIntent);
+                Log.d("NotificationReceiver", "Próximo alarme agendado para: " + nextHour.getTime().toString());
             } else {
                 alarmManager.set(
                         AlarmManager.RTC_WAKEUP,
-                        nextMinute.getTimeInMillis(),
+                        triggerTime,
                         pendingIntent);
             }
         } catch (SecurityException e) {
