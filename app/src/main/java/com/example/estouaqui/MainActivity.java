@@ -110,6 +110,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.button.MaterialButton;
+
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -133,6 +135,11 @@ public class MainActivity extends AppCompatActivity {
         setupDatabase();
         setupUI();
         checkAndRequestPermissions();
+
+        MaterialButton aboutButton = findViewById(R.id.about_button);
+        aboutButton.setOnClickListener(v -> {
+            startActivity(new Intent(this, AboutActivity.class));
+        });
     }
 
     private void setupToolbar() {
