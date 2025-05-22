@@ -27,7 +27,7 @@ public class AboutActivity extends AppCompatActivity {
                 "suporte e esperança para pessoas que estão passando por momentos difíceis.\n\n" +
                 "Desenvolvido por Vinícius de Miranda Simões, aka: Bigeus. Este projeto nasceu da crença de que pequenas " +
                 "mensagens positivas podem fazer uma grande diferença na vida de alguém.\n\n" +
-                "A ideia também veio do usuário @stblelscc no X/twitter, que talvez por ironia, pediu um app com função parecida, " +
+                "A ideia também veio do usuário @stblelscc no X/twitter que pediu um app com função parecida, " +
                 "mesmo assim vi uma boa oportunidade pra no mínimo, testar os conhecimentos.\n\n" +
                 "Se você está enfrentando pensamentos suicidas ou de automutilação, " +
                 "por favor, busque ajuda profissional:\n" +
