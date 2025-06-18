@@ -30,6 +30,13 @@ O **Mensagem de Vida** é um aplicativo simples mas poderoso que:
 | ![Tela Principal](screenshots/MainActivity.png) | ![Tela Sobre](screenshots/AboutActivity.png) |
 | *Mensagem inicial e botões de ação* | *Informações sobre o app e recursos de ajuda* |
 
+edit: suporte a dark mode adicionado!
+
+| Suporte a Dark Mode |         |
+|---------------------|---------|
+| ![Dark Mode](screenshots/DarkMode.png) ||
+
+
 ## ⚡ Como Usar
 
 1. **Baixe o APK** disponível na raiz do projeto `app-debug.apk`
